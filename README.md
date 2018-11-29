@@ -13,7 +13,7 @@ _dist_ folder contains a node.js file [server.js], which acts as server later.
 
 2. run local node.js server
 
-    `node dist\server.js`
+    `npm run start`
     
 3. open browser, and **localhost:8095**, provide config file, and can see default namespace UI. Provide namespace as query parameter to get other namespace details.
 
