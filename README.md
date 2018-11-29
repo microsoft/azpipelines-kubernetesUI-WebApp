@@ -17,7 +17,7 @@ _dist_ folder contains a node.js file [server.js], which acts as server later.
     
 3. open browser, and **localhost:8095**, provide config file, and can see default namespace UI. Provide namespace as query parameter to get other namespace details.
 
-4. Azure template to create a webapp in azure `armTemplates\windows-webapp-template.json`.
+4. Azure template to create a webapp in azure `Azure\windows-webapp-template.json`.
 
 ## Dependencies
 
