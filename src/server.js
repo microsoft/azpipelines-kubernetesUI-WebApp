@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
 var http = require('http');
 var fs = require('fs');
 var url = require('url');

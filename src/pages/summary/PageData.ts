@@ -1,3 +1,8 @@
+/*
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the MIT license.
+*/
+
 import { KubeResourceType, KubeServiceBase } from "azdevops-kube-summary/dist/Contracts/Contracts";
 
 export class PageDataService extends KubeServiceBase {
