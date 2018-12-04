@@ -23,24 +23,24 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
-    "@kubernetes/client-node": "^0.7.1",
-    "azdevops-kube-summary": "1.0.4",
+    "@kubernetes/client-node": "~0.7.1",
+    "azdevops-kube-summary": "~1.0.5",
     "azure-devops-ui": "~1.143.0",
-    "express": "^4.16.4",
-    "formidable": "^1.1.1",
-    "node": "^11.2.0",
+    "express": "~4.16.4",
+    "formidable": "~1.1.1",
     "office-ui-fabric-react": "5.131.5",
     "react": "~16.3.2",
     "react-dom": "~16.3.2"
   },
   "devDependencies": {
-    "@types/react": "^16.7.10",
+    "@types/react": "^16.7.13",
     "@types/react-dom": "^16.0.11",
     "base64-inline-loader": "^1.1.1",
     "copy-webpack-plugin": "^4.6.0",
     "copyfiles": "^2.1.0",
     "css-loader": "^1.0.1",
     "file-loader": "~2.0.0",
+    "node": "~11.2.0",
     "node-inspect": "^1.11.5",
     "npm-sass": "^2.3.0",
     "rimraf": "~2.6.2",
@@ -49,7 +49,7 @@
     "style-loader": "~0.23.1",
     "ts-loader": "~5.2.2",
     "typescript": "^2.9.2",
-    "webpack": "^4.26.1",
+    "webpack": "^4.27.0",
     "webpack-cli": "^3.1.2"
   }
 }
