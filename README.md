@@ -1,5 +1,29 @@
 # Kubernetes summary UI Web App
 
+## Prerequisites: Node and Npm
+   
+**Windows and Mac OSX**: Download and install node from [nodejs.org](http://nodejs.org/)
+
+**Linux**: Install [using package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+
+From a terminal ensure at least node 8.4 and npm 5.3:
+
+```bash
+$ node -v && npm -v
+v8.4.0
+5.3.0
+```
+
+To install npm separately:
+
+```
+[sudo] npm install npm@5 -g
+npm -v
+5.6.0
+```
+
+Note: On windows if it's still returning npm 2.x run `where npm`. Notice hits in program files. Rename those two npm files and the 5.6.0 in AppData will win.
+
 ## Build
 
     npm install
