@@ -11,9 +11,9 @@
     "type": "git",
     "url": "https://github.com/Microsoft/azpipelines-kubernetesUI-WebApp.git"
   },
-  "engines" : { 
-    "node" : ">=8.4.0",
-    "npm" :  ">=5.3.0"
+  "engines": {
+    "node": ">=8.4.0",
+    "npm": ">=5.3.0"
   },
   "main": "dist/server.js",
   "files": [
@@ -27,8 +27,8 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
-    "@kubernetes/client-node": "~0.7.1",
-    "azdevops-kube-summary": "~1.0.5",
+    "@azurepipelines/azdevops-kube-summary": "^1.0.5",
+    "@kubernetes/client-node": "^0.7.2",
     "azure-devops-ui": "~1.143.0",
     "express": "~4.16.4",
     "formidable": "~1.1.1",
@@ -48,12 +48,12 @@
     "node-inspect": "^1.11.5",
     "npm-sass": "^2.3.0",
     "rimraf": "~2.6.2",
-    "sass": "^1.15.1",
+    "sass": "^1.15.2",
     "sass-loader": "~7.1.0",
     "style-loader": "~0.23.1",
     "ts-loader": "~5.2.2",
     "typescript": "^2.9.2",
-    "webpack": "^4.27.0",
+    "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
   }
 }

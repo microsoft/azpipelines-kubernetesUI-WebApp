@@ -3,7 +3,7 @@
     // Licensed under the MIT license.
 */
 
-import * as K8sSummary from "azdevops-kube-summary";
+import * as K8sSummary from "@azurepipelines/azdevops-kube-summary";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { PageDataService } from "./PageData";
