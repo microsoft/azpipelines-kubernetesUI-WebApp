@@ -3,7 +3,7 @@
     Licensed under the MIT license.
 */
 
-import { KubeResourceType, KubeServiceBase } from "azdevops-kube-summary/dist/Contracts/KubeServiceBase";
+import { KubeResourceType, KubeServiceBase } from "@azurepipelines/azdevops-kube-summary/dist/Contracts/KubeServiceBase";
 
 export class PageDataService extends KubeServiceBase {
     public fetch(resourceType: KubeResourceType): Promise<any> {
