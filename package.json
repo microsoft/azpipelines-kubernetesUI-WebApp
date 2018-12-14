@@ -27,9 +27,9 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
-    "@azurepipelines/azdevops-kube-summary": "^1.0.5",
+    "@azurepipelines/azdevops-kube-summary": "^1.0.8",
     "@kubernetes/client-node": "^0.7.2",
-    "azure-devops-ui": "~1.143.0",
+    "azure-devops-ui": "^1.144.1",
     "express": "~4.16.4",
     "formidable": "~1.1.1",
     "office-ui-fabric-react": "5.131.5",
