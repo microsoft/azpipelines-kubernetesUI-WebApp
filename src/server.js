@@ -22,6 +22,8 @@ const getNamespacedPods = (namespace, pretty) => { return k8sApi && k8sApi.listN
 const getServices = (namespace, pretty) => { return k8sApi && k8sApi.listNamespacedService(namespace, pretty); };
 const getDeployments = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedDeployment(namespace, pretty); };
 const getReplicaSets = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedReplicaSet(namespace, pretty); };
+const getDaemonSets = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedDaemonSet(namespace, pretty); };
+const getStatefulSets = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedStatefulSet(namespace, pretty); };
 
 var app = express();
 app.use(express.static('dest'));
@@ -91,6 +93,14 @@ app.get('/getdeployments', function (req, res) {
 
 app.get('/getreplicasets', function (req, res) {
     processCommands(req, res, getReplicaSets);
+});
+
+app.get('/getdaemonsets', function (req,res) {
+    processCommands(req, res, getDaemonSets);
+});
+
+app.get('/getstatefulsets', function (req,res) {
+    processCommands(req, res, getStatefulSets);
 });
 
 app.get("/logout", function (req, res) {

@@ -20,6 +20,12 @@ export class PageDataService extends KubeServiceBase {
             case KubeResourceType.ReplicaSets:
                 return this._populateEntities("/getreplicasets");
 
+            case KubeResourceType.DaemonSets:
+                return this._populateEntities("/getdaemonsets");
+
+            case KubeResourceType.StatefulSets:
+                return this._populateEntities("/getstatefulsets");
+            
             default:
                 return Promise.resolve([]);
         }
