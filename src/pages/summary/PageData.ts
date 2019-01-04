@@ -21,6 +21,15 @@ export class PageDataService extends KubeServiceBase {
             case KubeResourceType.ReplicaSets:
                 url = "/getreplicasets";
                 break;
+
+            case KubeResourceType.DaemonSets:
+                url = "/getdaemonsets";
+                break;
+
+            case KubeResourceType.StatefulSets:
+                url = "/getstatefulsets";
+                break;
+            
             default:
                 return Promise.resolve([]);
         }
