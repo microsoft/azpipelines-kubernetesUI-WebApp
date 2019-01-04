@@ -6,29 +6,38 @@
 import { KubeResourceType, KubeServiceBase } from "@azurepipelines/azdevops-kube-summary/dist/Contracts/KubeServiceBase";
 
 export class PageDataService extends KubeServiceBase {
-    public fetch(resourceType: KubeResourceType): Promise<any> {
+    public fetch(resourceType: KubeResourceType, labelSelector?:string): Promise<any> {
+        let url:string = "";
         switch (resourceType) {
             case KubeResourceType.Pods:
-                return this._populateEntities("/getpods");
-
+                url = "/getpods";
+                break;
             case KubeResourceType.Services:
-                return this._populateEntities("/getservices");
-
+                url = "/getservices";
+                break;
             case KubeResourceType.Deployments:
-                return this._populateEntities("/getdeployments");
-
+                url = "/getdeployments";
+                break;
             case KubeResourceType.ReplicaSets:
-                return this._populateEntities("/getreplicasets");
+                url = "/getreplicasets";
+                break;
 
             case KubeResourceType.DaemonSets:
-                return this._populateEntities("/getdaemonsets");
+                url = "/getdaemonsets";
+                break;
 
             case KubeResourceType.StatefulSets:
-                return this._populateEntities("/getstatefulsets");
+                url = "/getstatefulsets";
+                break;
             
             default:
                 return Promise.resolve([]);
         }
+        if(labelSelector){
+            url = url.concat("/?labelselector=",encodeURIComponent(labelSelector));
+        }
+        console.log(url);
+        return this._populateEntities(url);
     }
 
     private _populateEntities(command: string): Promise<any> {

@@ -18,7 +18,7 @@ var k8sAppApiClient;
 var userInputNamespace = "";
 
 const getNamespaces = (namespace, pretty) => { return k8sApi && k8sApi.listNamespace(pretty); };
-const getNamespacedPods = (namespace, pretty) => { return k8sApi && k8sApi.listNamespacedPod(namespace, pretty); };
+const getNamespacedPods = (namespace, pretty, labelFilter) => { return k8sApi && k8sApi.listNamespacedPod(namespace, pretty, undefined,undefined,undefined,labelFilter||""); };
 const getServices = (namespace, pretty) => { return k8sApi && k8sApi.listNamespacedService(namespace, pretty); };
 const getDeployments = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedDeployment(namespace, pretty); };
 const getReplicaSets = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedReplicaSet(namespace, pretty); };
@@ -129,7 +129,8 @@ function processCommands(req, res, command) {
     var { requestUrl, namespaceComputed } = getUserInput(req);
     userInputNamespace = namespaceComputed;
     if (userInputNamespace && command) {
-        var promise = command(userInputNamespace, "false")
+        var selector = getLabelSelector(req);
+        var promise = selector?command(userInputNamespace, "false", selector):command(userInputNamespace, "false");
         if (promise) {
             promise.then(function (result) {
                 var outputRes = JSON.stringify(result.body);
@@ -166,6 +167,16 @@ function getUserInput(req) {
     var namespaceComputed = urlObject.query["namespace"] || userInputNamespace || defaultNamespace;
     console.log('getUserInput requestUrl:' + requestUrl + ' namespace: ' + namespaceComputed);
     return { requestUrl: requestUrl, namespaceComputed: namespaceComputed };
+}
+
+function getLabelSelector(req) {
+    var urlObject = url.parse(req.url, true);
+    var requestUrl = urlObject.pathname.toLowerCase();
+    var labelSelector = urlObject.query["labelselector"];
+    if(labelSelector) {
+        return decodeURIComponent(labelSelector);
+    }
+    return undefined;
 }
 
 exports.listen = function () {
