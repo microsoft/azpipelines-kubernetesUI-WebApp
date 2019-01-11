@@ -130,7 +130,7 @@ function processCommands(req, res, command) {
     userInputNamespace = namespaceComputed;
     if (userInputNamespace && command) {
         var selector = getLabelSelector(req);
-        var promise = selector?command(userInputNamespace, "false", selector):command(userInputNamespace, "false");
+        var promise = selector ? command(userInputNamespace, "false", selector) : command(userInputNamespace, "false");
         if (promise) {
             promise.then(function (result) {
                 var outputRes = JSON.stringify(result.body);
