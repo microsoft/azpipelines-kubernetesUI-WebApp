@@ -1,0 +1,77 @@
+name: k8sUIWebApp_$(SourceBranchName)_$(Date:MMMd)$(Rev:.r)
+
+# PR trigger
+pr:
+- master
+
+# CI trigger
+trigger:
+- master
+
+jobs:
+- job: Build
+  timeoutInMinutes: 15
+  cancelTimeoutInMinutes: 2
+  pool:
+    name: 'Hosted VS2017'
+
+  steps:
+    - task: NodeTool@0
+      displayName: 'Use Node version'
+      inputs:
+        versionSpec: '8.4'
+
+    - task: Npm@1
+      displayName: 'npm install'
+      inputs:
+        command: install
+
+    - task: Npm@1
+      displayName: 'Build source'
+      inputs:
+        command: custom
+        customCommand: 'run build'
+
+- job: 'Publish'
+  timeoutInMinutes: 15
+  cancelTimeoutInMinutes: 2
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  pool:
+    name: 'Hosted VS2017'
+
+  steps:
+    - task: NodeTool@0
+      displayName: 'Use Node version'
+      inputs:
+        versionSpec: '8.4'
+
+    - task: Npm@1
+      displayName: 'npm install'
+      inputs:
+        command: install
+
+    - task: Npm@1
+      displayName: 'Build source'
+      inputs:
+        command: custom
+        customCommand: 'run build'
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive dist folder'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/'
+        includeRootFolder: false
+        archiveFile: '$(Build.ArtifactStagingDirectory)/Dist_$(Build.BuildId).zip'
+
+    - task: CopyFiles@2
+      displayName: 'Copy ARM template'
+      inputs:
+        SourceFolder: Azure
+        TargetFolder: '$(build.artifactstagingdirectory)'
+        OverWrite: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: dist'
+      inputs:
+        ArtifactName: dist
