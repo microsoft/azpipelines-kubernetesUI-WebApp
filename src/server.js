@@ -121,7 +121,12 @@ app.use(function (req, res, next) {
     if (requestUrl) {
         userInputNamespace = namespaceComputed;
         var fileName = "/summary" + requestUrl;
-        res.sendFile(__dirname + fileName);
+        if (fs.existsSync(__dirname + fileName)) {
+            res.sendFile(__dirname + fileName);
+        }
+        else {
+            res.sendFile(__dirname + requestUrl);
+        }
     }
 });
 
