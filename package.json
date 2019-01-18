@@ -22,14 +22,15 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "compile": "npm run clean && webpack --mode production && npm run copy-other ",
+    "compiledev": "npm run clean && webpack --mode development && npm run copy-other ",
     "build": "npm run compile",
     "copy-other": "copyfiles -u 1 src/*.js dist",
-    "start": "node dist/server.js"
+    "start": "npm run compiledev && node dist/server.js"
   },
   "dependencies": {
-    "@azurepipelines/azdevops-kube-summary": "^2.2.0",
+    "@azurepipelines/azdevops-kube-summary": "~2.2.3",
     "@kubernetes/client-node": "^0.7.2",
-    "azure-devops-ui": "~1.143.0",
+    "azure-devops-ui": "~1.144.1",
     "express": "~4.16.4",
     "formidable": "~1.1.1",
     "office-ui-fabric-react": "5.131.5",

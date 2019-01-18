@@ -29,6 +29,7 @@ var app = express();
 app.use(express.static('dest'));
 
 console.log('Using port:' + port);
+console.log('Address to use for browsing: http://localhost:' + port);
 app.get('/', function (req, res) {
     res.redirect('/login');
 });
