@@ -28,7 +28,7 @@
     "start": "npm run compiledev && node dist/server.js"
   },
   "dependencies": {
-    "@azurepipelines/azdevops-kube-summary": "~2.2.3",
+    "@azurepipelines/azdevops-kube-summary": "^2.2.3",
     "@kubernetes/client-node": "^0.7.2",
     "azure-devops-ui": "~1.144.1",
     "express": "~4.16.4",
