@@ -48,10 +48,9 @@ module.exports = {
                 }]
             },
             {
-                test: /\.html$/,
+                test: /\.(html|htm|png|jpg)$/,
                 loader: "file-loader"
-            },
-            { test: /\.(png|jpg)$/, loader: 'file-loader' },
+            }
         ]
     },
     plugins: [
