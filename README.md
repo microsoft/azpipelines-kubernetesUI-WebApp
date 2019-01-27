@@ -10,8 +10,8 @@ From a terminal ensure at least node 8.4 and npm 5.3:
 
 ```bash
 $ node -v && npm -v
-v8.4.0
-5.3.0
+v8.9.0
+5.5.1
 ```
 
 To install npm separately:
