@@ -45,15 +45,18 @@
     "copyfiles": "^2.1.0",
     "css-loader": "^1.0.1",
     "file-loader": "~2.0.0",
+    "mini-css-extract-plugin": "^0.5.0",
     "node": "~11.2.0",
     "node-inspect": "^1.11.5",
     "npm-sass": "^2.3.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "rimraf": "~2.6.2",
     "sass": "^1.15.2",
     "sass-loader": "~7.1.0",
     "style-loader": "~0.23.1",
     "ts-loader": "~5.2.2",
     "typescript": "^2.9.2",
+    "uglifyjs-webpack-plugin": "^2.1.1",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
   }

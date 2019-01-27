@@ -1,6 +1,9 @@
 const path = require("path");
 const fs = require("fs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 // Webpack entry points. Mapping from resulting bundle name to the source file entry.
 const entries = {};
@@ -8,12 +11,12 @@ const entries = {};
 // Loop through subfolders in the "pages" folder and add an entry for each one
 const pagesDir = path.join(__dirname, "src/pages");
 fs.readdirSync(pagesDir).filter(dir => {
-    if (dir != "login") {        
-    
-    if (fs.statSync(path.join(pagesDir, dir)).isDirectory()) {
-        entries[dir] = "./" + path.relative(process.cwd(), path.join(pagesDir, dir, dir));
+    if (dir != "login") {
+
+        if (fs.statSync(path.join(pagesDir, dir)).isDirectory()) {
+            entries[dir] = "./" + path.relative(process.cwd(), path.join(pagesDir, dir, dir));
+        }
     }
-}
 });
 
 module.exports = {
@@ -27,6 +30,15 @@ module.exports = {
     stats: {
         warnings: false
     },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                sourceMap: true,
+                include: /\.js$/,
+                extractComments: "all"
+            })
+        ]
+    },
     module: {
         rules: [
             {
@@ -35,11 +47,20 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ["style-loader", "css-loader", "azure-devops-ui/buildScripts/css-variables-loader", "sass-loader"]
+                use: [
+                    "style-loader",
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "azure-devops-ui/buildScripts/css-variables-loader",
+                    "sass-loader"
+                ]
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader"
+                ],
             },
             {
                 test: /\.woff$/,
@@ -54,6 +75,14 @@ module.exports = {
         ]
     },
     plugins: [
-        new CopyWebpackPlugin([ { from: "**/*.html", context: "src/pages" }])
+        new CopyWebpackPlugin([{
+            from: "**/*.html",
+            context: "src/pages"
+        }]),
+        new MiniCssExtractPlugin({
+            filename: "[name]/[name].css",
+            chunkFilename: "[id]/[id].css"
+        }),
+        new OptimizeCSSAssetsPlugin({})
     ]
 };
