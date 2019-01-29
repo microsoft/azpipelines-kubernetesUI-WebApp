@@ -19,7 +19,7 @@ jobs:
   - task: NodeTool@0
     displayName: 'Use Node version'
     inputs:
-      versionSpec: '8.4'
+      versionSpec: '8.9.0'
 
   - task: Npm@1
     displayName: 'npm install'
@@ -32,22 +32,28 @@ jobs:
       command: custom
       customCommand: 'run build'
 
+  - task: Npm@1
+    displayName: 'Prune dependencies to be production'
+    inputs:
+      command: custom
+      customCommand: 'prune --production'
+
+  - task: ArchiveFiles@2
+    displayName: 'Archive dist folder'
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)/'
+      includeRootFolder: false
+      archiveFile: '$(Build.ArtifactStagingDirectory)/Dist_$(Build.BuildId).zip'
+
+  - task: CopyFiles@2
+    displayName: 'Copy ARM template'
+    inputs:
+      SourceFolder: Azure
+      TargetFolder: '$(build.artifactstagingdirectory)'
+      OverWrite: true
+
   # publish dist for master branch only
   - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/master') }}:
-    - task: ArchiveFiles@2
-      displayName: 'Archive dist folder'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/'
-        includeRootFolder: false
-        archiveFile: '$(Build.ArtifactStagingDirectory)/Dist_$(Build.BuildId).zip'
-
-    - task: CopyFiles@2
-      displayName: 'Copy ARM template'
-      inputs:
-        SourceFolder: Azure
-        TargetFolder: '$(build.artifactstagingdirectory)'
-        OverWrite: true
-
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: dist'
       inputs:
