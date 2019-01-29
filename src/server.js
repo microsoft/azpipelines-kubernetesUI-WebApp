@@ -18,7 +18,7 @@ var k8sAppApiClient;
 var userInputNamespace = "";
 
 const getNamespaces = (namespace, pretty) => { return k8sApi && k8sApi.listNamespace(pretty); };
-const getNamespacedPods = (namespace, pretty, labelFilter) => { return k8sApi && k8sApi.listNamespacedPod(namespace, pretty, undefined,undefined,undefined,labelFilter||""); };
+const getNamespacedPods = (namespace, pretty, labelFilter) => { return k8sApi && k8sApi.listNamespacedPod(namespace, pretty, undefined, undefined, undefined, labelFilter || ""); };
 const getServices = (namespace, pretty) => { return k8sApi && k8sApi.listNamespacedService(namespace, pretty); };
 const getDeployments = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedDeployment(namespace, pretty); };
 const getReplicaSets = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedReplicaSet(namespace, pretty); };
@@ -95,11 +95,11 @@ app.get('/getreplicasets', function (req, res) {
     processCommands(req, res, getReplicaSets);
 });
 
-app.get('/getdaemonsets', function (req,res) {
+app.get('/getdaemonsets', function (req, res) {
     processCommands(req, res, getDaemonSets);
 });
 
-app.get('/getstatefulsets', function (req,res) {
+app.get('/getstatefulsets', function (req, res) {
     processCommands(req, res, getStatefulSets);
 });
 
@@ -135,7 +135,7 @@ function processCommands(req, res, command) {
     userInputNamespace = namespaceComputed;
     if (userInputNamespace && command) {
         var selector = getLabelSelector(req);
-        var promise = selector?command(userInputNamespace, "false", selector):command(userInputNamespace, "false");
+        var promise = selector ? command(userInputNamespace, "false", selector) : command(userInputNamespace, "false");
         if (promise) {
             promise.then(function (result) {
                 var outputRes = JSON.stringify(result.body);
@@ -178,7 +178,7 @@ function getLabelSelector(req) {
     var urlObject = url.parse(req.url, true);
     var requestUrl = urlObject.pathname.toLowerCase();
     var labelSelector = urlObject.query["labelselector"];
-    if(labelSelector) {
+    if (labelSelector) {
         return decodeURIComponent(labelSelector);
     }
     return undefined;
