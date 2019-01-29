@@ -11,8 +11,7 @@ const entries = {};
 // Loop through subfolders in the "pages" folder and add an entry for each one
 const pagesDir = path.join(__dirname, "src/pages");
 fs.readdirSync(pagesDir).filter(dir => {
-    if (dir != "login") {
-
+    if (dir !== "login") {
         if (fs.statSync(path.join(pagesDir, dir)).isDirectory()) {
             entries[dir] = "./" + path.relative(process.cwd(), path.join(pagesDir, dir, dir));
         }
@@ -40,8 +39,7 @@ module.exports = {
         ]
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.tsx?$/,
                 loader: "ts-loader"
             },
@@ -83,6 +81,12 @@ module.exports = {
             filename: "[name]/[name].css",
             chunkFilename: "[id]/[id].css"
         }),
-        new OptimizeCSSAssetsPlugin({})
+        new OptimizeCSSAssetsPlugin({}),
+        new CopyWebpackPlugin([{
+            from: "server.js",
+            context: "src",
+            flatten: true,
+            to: "./"
+        }])
     ]
 };
