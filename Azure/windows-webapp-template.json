@@ -23,14 +23,6 @@
                 "[concat('hidden-related:', '/subscriptions/', subscription().subscriptionId,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
             },
             "resources": [
-                {
-                    "type": "siteextensions",
-                    "name": "Microsoft.ApplicationInsights.AzureWebSites",
-                    "apiVersion": "2015-08-01",
-                    "dependsOn": [
-                    ],
-                    "properties": {}
-                }
             ],
             "properties": {
                 "siteConfig": {
