@@ -27,15 +27,15 @@
     "start": "npm run compiledev && node dist/server.js"
   },
   "dependencies": {
-    "@kubernetes/client-node": "^0.7.2",
+    "@kubernetes/client-node": "^0.8.1",
     "express": "~4.16.4",
     "formidable": "~1.1.1"
   },
   "devDependencies": {
-    "@azurepipelines/azdevops-kube-summary": "^2.2.3",
+    "@azurepipelines/azdevops-kube-summary": "^2.2.4",
     "@types/react": "^16.7.13",
     "@types/react-dom": "^16.0.11",
-    "azure-devops-ui": "~1.144.1",
+    "azure-devops-ui": "^1.148.0",
     "base64-inline-loader": "^1.1.1",
     "copy-webpack-plugin": "^4.6.0",
     "copyfiles": "^2.1.0",
@@ -46,9 +46,9 @@
     "node-inspect": "^1.11.5",
     "npm-sass": "^2.3.0",
     "office-ui-fabric-react": "5.131.5",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "react": "~16.3.2",
     "react-dom": "~16.3.2",
-    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "rimraf": "~2.6.2",
     "sass": "^1.15.2",
     "sass-loader": "~7.1.0",
