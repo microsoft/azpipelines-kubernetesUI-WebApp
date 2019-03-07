@@ -67,7 +67,7 @@ module.exports = {
                 }]
             },
             {
-                test: /\.(html|htm|png|jpg)$/,
+                test: /\.(html|htm|png|jpg|svg)$/,
                 loader: "file-loader"
             }
         ]
