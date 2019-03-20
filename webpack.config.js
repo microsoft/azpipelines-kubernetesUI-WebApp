@@ -3,7 +3,6 @@ const fs = require("fs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 // Webpack entry points. Mapping from resulting bundle name to the source file entry.
 const entries = {};
@@ -28,15 +27,6 @@ module.exports = {
     },
     stats: {
         warnings: false
-    },
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                sourceMap: true,
-                include: /\.js$/,
-                extractComments: "all"
-            })
-        ]
     },
     module: {
         rules: [{
