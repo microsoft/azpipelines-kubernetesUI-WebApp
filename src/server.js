@@ -68,6 +68,15 @@ app.post('/login', function (req, res) {
     });
 });
 
+app.get('/clusterName', function (req, res) {
+    var kc = new k8s.KubeConfig();
+    kc.loadFromDefault();
+    var outputRes = '{"clusterName":"' + kc.getCurrentCluster().name + '"}'
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': outputRes.length });
+    res.write(outputRes);
+    res.end();
+});
+
 app.get('/summary', function (req, res) {
     var { requestUrl, namespaceComputed } = getUserInput(req);
     userInputNamespace = namespaceComputed;
