@@ -14,19 +14,17 @@ const contentElementId: string = "main-content";
 class Summary extends React.Component<{}, { clusterName: string }> {
     public constructor(props: {}) {
         super(props);
-        this.state = { clusterName: "" }
-        fetch("/clusterName")
-            .then((res) => {
-                res.json().then((val) => {
-                    this.setState({
-                        clusterName: val.clusterName
-                    });
-                });
-            });
+        this.state = { clusterName: "" };
+        fetch("/clusterName").then(res => res.json().then(val => this.setState({ clusterName: val.clusterName })));
     }
 
     public render(): JSX.Element {
-        const props = { title: "Kubernetes summary UI Web App", kubeService: this._pageDataService, clusterName: this.state.clusterName } as K8sSummary.IKubeSummaryProps;
+        const props = {
+            title: "Kubernetes summary UI Web App",
+            kubeService: this._pageDataService,
+            imageService: this._pageDataService,
+            clusterName: this.state.clusterName
+        } as K8sSummary.IKubeSummaryProps;
         return <K8sSummary.KubeSummary  {...props} />;
     }
 
