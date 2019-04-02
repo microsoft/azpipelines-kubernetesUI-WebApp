@@ -189,7 +189,8 @@ function processCommands(req, res, command, contentType = "application/json") {
             podName ? command(userInputNamespace, "false", podName) : command(userInputNamespace, "false");
         if (promise) {
             promise.then(function (result) {
-                    var outputRes = !podName ? JSON.stringify(result.body) : result.body || " ";
+                    const resultBody = result.body || "";
+                    const outputRes = (typeof resultBody == "string") ? resultBody : JSON.stringify(resultBody);
                     res.writeHead(result.response.statusCode, {
                         'Content-Type': contentType || "application/json",
                         'Content-Length': outputRes.length
@@ -198,7 +199,8 @@ function processCommands(req, res, command, contentType = "application/json") {
                     res.end();
                 })
                 .catch(function (error) {
-                    var errorMessage = error && error.message || error;
+                    var errorMessage = error && error.message || error && error.body && error.body.message || error || "";
+                    errorMessage = (typeof errorMessage == "string") ? errorMessage : JSON.stringify(errorMessage);
                     if (errorMessage) {
                         res.writeHead(404, {
                             'Content-Type': 'text/plain',
