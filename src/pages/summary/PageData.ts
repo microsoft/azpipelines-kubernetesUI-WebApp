@@ -79,6 +79,11 @@ export class PageDataService extends KubeServiceBase {
         return Promise.resolve(sampleImageData);
     }
 
+    public getPodLog(podName: string): Promise<string> {
+        const url: string = "/getpodlog/?podName=" + encodeURIComponent(podName);
+        return fetch(url).then(res => res.ok ? res.text() : "");
+    }
+
     private _populateEntities(command: string): Promise<any> {
         return fetch(command).then(res => res.ok ? res.json() : {});
     }
