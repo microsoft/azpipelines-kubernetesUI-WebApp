@@ -32,7 +32,7 @@
     "formidable": "~1.1.1"
   },
   "devDependencies": {
-    "@azurepipelines/azdevops-kube-summary": "^2.3.3",
+    "@azurepipelines/azdevops-kube-summary": "^3.0.1",
     "@types/react": "16.8.2",
     "@types/react-dom": "16.8.2",
     "azure-devops-ui": "1.149.3",

@@ -13,17 +13,35 @@ const defaultNamespace = "default";
 const configEnvKey = 'KUBECONFIG';
 const loginPageUrl = "/login/login.html";
 const summaryUrl = "/summary/summary.html";
-var k8sApi;
+var k8sCoreApi;
 var k8sAppApiClient;
 var userInputNamespace = "";
 
-const getNamespaces = (namespace, pretty) => { return k8sApi && k8sApi.listNamespace(pretty); };
-const getNamespacedPods = (namespace, pretty, labelFilter) => { return k8sApi && k8sApi.listNamespacedPod(namespace, pretty, undefined, undefined, undefined, labelFilter || ""); };
-const getServices = (namespace, pretty) => { return k8sApi && k8sApi.listNamespacedService(namespace, pretty); };
-const getDeployments = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedDeployment(namespace, pretty); };
-const getReplicaSets = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedReplicaSet(namespace, pretty); };
-const getDaemonSets = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedDaemonSet(namespace, pretty); };
-const getStatefulSets = (namespace, pretty) => { return k8sAppApiClient && k8sAppApiClient.listNamespacedStatefulSet(namespace, pretty); };
+const getNamespaces = (namespace, pretty) => {
+    return k8sCoreApi && k8sCoreApi.listNamespace(pretty);
+};
+const getNamespacedPods = (namespace, pretty, labelFilter) => {
+    return k8sCoreApi && k8sCoreApi.listNamespacedPod(namespace, pretty, undefined, undefined, undefined, labelFilter || "");
+};
+const getServices = (namespace, pretty) => {
+    return k8sCoreApi && k8sCoreApi.listNamespacedService(namespace, pretty);
+};
+const getDeployments = (namespace, pretty) => {
+    return k8sAppApiClient && k8sAppApiClient.listNamespacedDeployment(namespace, pretty);
+};
+const getReplicaSets = (namespace, pretty) => {
+    return k8sAppApiClient && k8sAppApiClient.listNamespacedReplicaSet(namespace, pretty);
+};
+const getDaemonSets = (namespace, pretty) => {
+    return k8sAppApiClient && k8sAppApiClient.listNamespacedDaemonSet(namespace, pretty);
+};
+const getStatefulSets = (namespace, pretty) => {
+    return k8sAppApiClient && k8sAppApiClient.listNamespacedStatefulSet(namespace, pretty);
+};
+const readNamespacePodLog = (namespace, pretty, podName) => {
+    const tailLines = 500;
+    return k8sCoreApi && k8sCoreApi.readNamespacedPodLog(podName, namespace, undefined, undefined, undefined, pretty, undefined, undefined, tailLines, undefined);
+};
 
 var app = express();
 app.use(express.static('dest'));
@@ -34,19 +52,24 @@ app.get('/', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-    var { requestUrl, namespaceComputed } = getUserInput(req);
+    var {
+        requestUrl,
+        namespaceComputed
+    } = getUserInput(req);
     userInputNamespace = namespaceComputed;
     if (isUserLogRequired()) {
         res.sendFile(__dirname + loginPageUrl);
-    }
-    else {
+    } else {
         var summaryUrl = '/summary?namespace=' + userInputNamespace;
         res.redirect(summaryUrl);
     }
 });
 
 app.post('/login', function (req, res) {
-    var { requestUrl, namespaceComputed } = getUserInput(req);
+    var {
+        requestUrl,
+        namespaceComputed
+    } = getUserInput(req);
     userInputNamespace = namespaceComputed;
     var form = new formidable.IncomingForm();
     var fileName = loginPageUrl;
@@ -56,13 +79,12 @@ app.post('/login', function (req, res) {
                 process.env[configEnvKey] = files.fileToUpload.path;
                 var kc = new k8s.KubeConfig();
                 kc.loadFromDefault();
-                k8sApi = kc.makeApiClient(k8s.Core_v1Api);
+                k8sCoreApi = kc.makeApiClient(k8s.Core_v1Api);
                 k8sAppApiClient = kc.makeApiClient(k8s.Apps_v1Api);
                 var summaryUrl = '/summary?namespace=' + userInputNamespace;
                 res.redirect(summaryUrl);
             }
-        }
-        else {
+        } else {
             res.redirect('/login');
         }
     });
@@ -71,14 +93,22 @@ app.post('/login', function (req, res) {
 app.get('/clusterName', function (req, res) {
     var kc = new k8s.KubeConfig();
     kc.loadFromDefault();
-    var outputRes = JSON.stringify({ clusterName: kc.getCurrentCluster().name });
-    res.writeHead(200, { 'Content-Type': 'application/json', 'Content-Length': outputRes.length });
+    var outputRes = JSON.stringify({
+        clusterName: kc.getCurrentCluster().name
+    });
+    res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Content-Length': outputRes.length
+    });
     res.write(outputRes);
     res.end();
 });
 
 app.get('/summary', function (req, res) {
-    var { requestUrl, namespaceComputed } = getUserInput(req);
+    var {
+        requestUrl,
+        namespaceComputed
+    } = getUserInput(req);
     userInputNamespace = namespaceComputed;
     var fileName = isUserLogRequired() ? loginPageUrl : summaryUrl;
     res.sendFile(__dirname + fileName);
@@ -112,9 +142,13 @@ app.get('/getstatefulsets', function (req, res) {
     processCommands(req, res, getStatefulSets);
 });
 
+app.get("/getpodlog", function (req, res) {
+    processCommands(req, res, readNamespacePodLog, "text/plain");
+});
+
 app.get("/logout", function (req, res) {
     var kubConfig = process.env[configEnvKey];
-    k8sApi = undefined;
+    k8sCoreApi = undefined;
     k8sAppApiClient = undefined;
     process.env[configEnvKey] = "";
     userInputNamespace = defaultNamespace;
@@ -126,43 +160,58 @@ app.get("/logout", function (req, res) {
 });
 
 app.use(function (req, res, next) {
-    var { requestUrl, namespaceComputed } = getUserInput(req);
+    var {
+        requestUrl,
+        namespaceComputed
+    } = getUserInput(req);
     if (requestUrl) {
         userInputNamespace = namespaceComputed;
         var fileName = "/summary" + requestUrl;
         if (fs.existsSync(__dirname + fileName)) {
             res.sendFile(__dirname + fileName);
-        }
-        else {
+        } else {
             res.sendFile(__dirname + requestUrl);
         }
     }
 });
 
-function processCommands(req, res, command) {
-    var { requestUrl, namespaceComputed } = getUserInput(req);
+function processCommands(req, res, command, contentType = "application/json") {
+    var {
+        requestUrl,
+        namespaceComputed
+    } = getUserInput(req);
     userInputNamespace = namespaceComputed;
     if (userInputNamespace && command) {
-        var selector = getLabelSelector(req);
-        var promise = selector ? command(userInputNamespace, "false", selector) : command(userInputNamespace, "false");
+        var selector = getQueryParameterValue(req, "labelselector");
+        var podName = getQueryParameterValue(req, "podName");
+        var promise = selector ?
+            command(userInputNamespace, "false", selector) :
+            podName ? command(userInputNamespace, "false", podName) : command(userInputNamespace, "false");
         if (promise) {
             promise.then(function (result) {
-                var outputRes = JSON.stringify(result.body);
-                res.writeHead(result.response.statusCode, { 'Content-Type': 'application/json', 'Content-Length': outputRes.length });
-                res.write(outputRes);
-                res.end();
-            })
+                    const resultBody = result.body || "";
+                    const outputRes = (typeof resultBody == "string") ? resultBody : JSON.stringify(resultBody);
+                    res.writeHead(result.response.statusCode, {
+                        'Content-Type': contentType || "application/json",
+                        'Content-Length': outputRes.length
+                    });
+                    res.write(outputRes);
+                    res.end();
+                })
                 .catch(function (error) {
-                    var errorMessage = error && error.message || error;
+                    var errorMessage = error && error.message || error && error.body && error.body.message || error || "";
+                    errorMessage = (typeof errorMessage == "string") ? errorMessage : JSON.stringify(errorMessage);
                     if (errorMessage) {
-                        res.writeHead(404, { 'Content-Type': 'text/plain', 'Content-Length': errorMessage.length });
+                        res.writeHead(404, {
+                            'Content-Type': 'text/plain',
+                            'Content-Length': errorMessage.length
+                        });
                         res.write(errorMessage);
                         res.end();
                     }
                 });
             return true;
-        }
-        else {
+        } else {
             userInputNamespace = defaultNamespace;
             res.sendFile(__dirname + loginPageUrl);
         }
@@ -180,16 +229,20 @@ function getUserInput(req) {
     var requestUrl = urlObject.pathname.toLowerCase();
     var namespaceComputed = urlObject.query["namespace"] || userInputNamespace || defaultNamespace;
     console.log('getUserInput requestUrl:' + requestUrl + ' namespace: ' + namespaceComputed);
-    return { requestUrl: requestUrl, namespaceComputed: namespaceComputed };
+    return {
+        requestUrl: requestUrl,
+        namespaceComputed: namespaceComputed
+    };
 }
 
-function getLabelSelector(req) {
+function getQueryParameterValue(req, paramName) {
     var urlObject = url.parse(req.url, true);
     var requestUrl = urlObject.pathname.toLowerCase();
-    var labelSelector = urlObject.query["labelselector"];
-    if (labelSelector) {
-        return decodeURIComponent(labelSelector);
+    var paramValue = urlObject.query[paramName];
+    if (paramValue) {
+        return decodeURIComponent(paramValue);
     }
+
     return undefined;
 }
 
