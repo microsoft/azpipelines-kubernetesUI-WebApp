@@ -3,7 +3,7 @@
     Licensed under the MIT license.
 */
 
-import { KubeResourceType, KubeServiceBase } from "@azurepipelines/azdevops-kube-summary/dist/Contracts/KubeServiceBase";
+import { KubeResourceType, KubeServiceBase } from "@azurepipelines/webapp-kube-summary/dist/Contracts/KubeServiceBase";
 
 // todo :: add  'implements IImageService' to this class once we have the package
 export class PageDataService extends KubeServiceBase {
@@ -47,8 +47,8 @@ export class PageDataService extends KubeServiceBase {
         if (listImages) {
             for (const image of listImages) {
                 if (!imageDetails[image]) {
-                    const knownImage: boolean = image.startsWith("https://docker.io/redis@sha256")
-                        || image.startsWith("https://k8s.gcr.io/kubernetes-dashboard-amd64@sha256");
+                    const knownImage: boolean = image.startsWith("https://docker.io/library/redis@sha256:")
+                        || image.startsWith("https://k8s.gcr.io/kubernetes-dashboard-amd64@sha256:");
                     imageDetails[image] = knownImage;
                 }
             }
