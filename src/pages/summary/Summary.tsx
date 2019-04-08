@@ -3,7 +3,8 @@
     // Licensed under the MIT license.
 */
 
-import * as K8sSummary from "@azurepipelines/azdevops-kube-summary";
+import * as K8sSummary from "@azurepipelines/webapp-kube-summary";
+import { ContentReader } from "@azurepipelines/webapp-kube-summary/dist/WebUI/Common/ContentReader";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { PageDataService } from "./PageData";
@@ -23,7 +24,8 @@ class Summary extends React.Component<{}, { clusterName: string }> {
             title: "Kubernetes summary UI Web App",
             kubeService: this._pageDataService,
             imageService: this._pageDataService,
-            clusterName: this.state.clusterName
+            clusterName: this.state.clusterName,
+            getContentReaderComponent: (props?: any) => <ContentReader {...props} />
         } as K8sSummary.IKubeSummaryProps;
         return <K8sSummary.KubeSummary  {...props} />;
     }
