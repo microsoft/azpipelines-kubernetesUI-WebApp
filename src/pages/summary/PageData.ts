@@ -61,19 +61,123 @@ export class PageDataService extends KubeServiceBase {
         const sampleImageData = {
             "imageName": imageName,
             "imageUri": imageName,
-            "hash": "9ace3ce43db1505091c11d15edce7b520cfb598d38402be254a3024146920859",
-            "baseImageName": "metrics-server-amd64",
-            "distance": 0,
-            "imageType": "Docker Manifest, Schema 2",
-            "mediaType": "application/vdn.docker.distribution.manifest.v2+json",
-            "tags": ["production"],
+            "distance": null,
+            "imageType": "",
+            "mediaType": "",
+            "tags": [
+                "2"
+            ],
             "layerInfo": [
-                { "directive": "file", "arguments": "9ace3ce43db1505091c11d15edce7b520cfb598d38402be254a3024146920859" },
-                { "directive": "file", "arguments": "9ace3ce43db1505091c11d15edce7b520cfb598d38402be254a3024146920859" }],
-            "buildId": 1,
-            "buildVersion": "a",
-            "buildDefinitionName": "buildDefinitionName-x",
-            "buildDefinitionId": "2"
+                {
+                    "directive": "ADD",
+                    "arguments": "file:1d7cb45c4e196a6a84319b976b95ce1a9037c40b085e88350c071bf27ff59166 in /",
+                    "size": "88.9MB",
+                    "createdOn": new Date(1552350011000)
+                },
+                {
+                    "directive": "RUN",
+                    "arguments": "/bin/sh -c set -xe   && echo '#!/bin/sh' > /usr/sbin/policy-rc.d  && echo 'exit 101' >> /usr/sbin/policy-rc.d  && chmod +x /usr/sbin/policy-rc.d   && dpkg-divert --local --rename --add /sbin/initctl  && cp -a /usr/sbin/policy-rc.d /sbin/initctl  && sed -i 's/^exit.*/exit 0/' /sbin/initctl   && echo 'force-unsafe-io' > /etc/dpkg/dpkg.cfg.d/docker-apt-speedup   && echo 'DPkg::Post-Invoke { \"rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true\"; };' > /etc/apt/apt.conf.d/docker-clean  && echo 'APT::Update::Post-Invoke { \"rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true\"; };' >> /etc/apt/apt.conf.d/docker-clean  && echo 'Dir::Cache::pkgcache \"\"; Dir::Cache::srcpkgcache \"\";' >> /etc/apt/apt.conf.d/docker-clean   && echo 'Acquire::Languages \"none\";' > /etc/apt/apt.conf.d/docker-no-languages   && echo 'Acquire::GzipIndexes \"true\"; Acquire::CompressionTypes::Order:: \"gz\";' > /etc/apt/apt.conf.d/docker-gzip-indexes   && echo 'Apt::AutoRemove::SuggestsImportant \"false\";' > /etc/apt/apt.conf.d/docker-autoremove-suggest",
+                    "size": "745B",
+                    "createdOn": new Date(1552350012000)
+                },
+                {
+                    "directive": "RUN",
+                    "arguments": "/bin/sh -c rm -rf /var/lib/apt/lists/",
+                    "size": "0B",
+                    "createdOn": new Date(1552350013000)
+                },
+                {
+                    "directive": "RUN",
+                    "arguments": "/bin/sh -c mkdir -p /run/systemd && echo 'docker' > /run/systemd/containe",
+                    "size": "7B",
+                    "createdOn": new Date(1552350017000)
+                },
+                {
+                    "directive": "CMD",
+                    "arguments": "[\"/bin/bash\"]",
+                    "size": "0B",
+                    "createdOn": new Date(1552350017000)
+                },
+                {
+                    "directive": "MAINTAINER",
+                    "arguments": "demousr@gmail.com",
+                    "size": "0B",
+                    "createdOn": new Date(1554188266000)
+                },
+                {
+                    "directive": "RUN",
+                    "arguments": "/bin/sh -c apt-get updat",
+                    "size": "24.7MB",
+                    "createdOn": new Date(1554188342000)
+                },
+                {
+                    "directive": "CMD",
+                    "arguments": "[\"/bin/sh\" \"-c\" \"[“echo”,”Image created”]\"]",
+                    "size": "0B",
+                    "createdOn": new Date(1554191934000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.build.buildnumber=10",
+                    "size": "0B",
+                    "createdOn": new Date(1554718624000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.build.definitionname=WebApp-CI",
+                    "size": "0B",
+                    "createdOn": new Date(1554718625000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.build.repository.name=WebApp",
+                    "size": "0B",
+                    "createdOn": new Date(1554718625000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.build.repository.uri=http://WebAppServer1/AppCollection/WebApp/_git/WebApp",
+                    "size": "0B",
+                    "createdOn": new Date(1554718626000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.build.requestedfor=WebApp User",
+                    "size": "0B",
+                    "createdOn": new Date(1554718626000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.build.sourcebranchname=master",
+                    "size": "0B",
+                    "createdOn": new Date(1554718626000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.build.sourceversion=da9cc268fa2aef15f222817a324cc5e02fee2946",
+                    "size": "0B",
+                    "createdOn": new Date(1554718627000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.system.teamfoundationcollectionuriNotDefined=http://WebAppServer1/AppCollection/",
+                    "size": "0B",
+                    "createdOn": new Date(1554718627000)
+                },
+                {
+                    "directive": "LABEL",
+                    "arguments": "WebAppServer1.image.system.teamproject=WebApp",
+                    "size": "0B",
+                    "createdOn": new Date(1554718627000)
+                }
+            ],
+            "runId": 10,
+            "pipelineVersion": "5",
+            "pipelineName": "WebApp-CI",
+            "pipelineId": "1",
+            "imageSize": "1362",
+            "jobName": "CI Agent job 1",
+            "createTime": new Date(1554718639820)
         };
 
         return Promise.resolve(sampleImageData);
