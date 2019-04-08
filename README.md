@@ -6,7 +6,7 @@
 
 **Linux**: Install [using package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
-From a terminal ensure at least node 8.4 and npm 5.3:
+From a terminal ensure at least node 8.9 and npm 5.5.1:
 
 ```bash
 $ node -v && npm -v
