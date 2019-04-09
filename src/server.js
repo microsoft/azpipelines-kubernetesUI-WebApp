@@ -38,9 +38,9 @@ const getDaemonSets = (namespace, pretty) => {
 const getStatefulSets = (namespace, pretty) => {
     return k8sAppApiClient && k8sAppApiClient.listNamespacedStatefulSet(namespace, pretty);
 };
-const readNamespacePodLog = (namespace, pretty, podName) => {
+const readNamespacePodLog = (namespace, pretty, podName, podContainerName) => {
     const tailLines = 500;
-    return k8sCoreApi && k8sCoreApi.readNamespacedPodLog(podName, namespace, undefined, undefined, undefined, pretty, undefined, undefined, tailLines, undefined);
+    return k8sCoreApi && k8sCoreApi.readNamespacedPodLog(podName, namespace, podContainerName, undefined, undefined, pretty, undefined, undefined, tailLines, undefined);
 };
 
 var app = express();
@@ -184,9 +184,10 @@ function processCommands(req, res, command, contentType = "application/json") {
     if (userInputNamespace && command) {
         var selector = getQueryParameterValue(req, "labelselector");
         var podName = getQueryParameterValue(req, "podName");
+        var podContainerName = getQueryParameterValue(req, "podContainerName");
         var promise = selector ?
             command(userInputNamespace, "false", selector) :
-            podName ? command(userInputNamespace, "false", podName) : command(userInputNamespace, "false");
+            podName ? command(userInputNamespace, "false", podName, podContainerName || "") : command(userInputNamespace, "false");
         if (promise) {
             promise.then(function (result) {
                     const resultBody = result.body || "";
