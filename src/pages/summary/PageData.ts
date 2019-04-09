@@ -184,7 +184,7 @@ export class PageDataService extends KubeServiceBase {
     }
 
     public getPodLog(podName: string, podContainerName?: string): Promise<string> {
-        const url: string = "/getpodlog/?podName=" + encodeURIComponent(podName) + "&podContainerName=" + encodeURIComponent(podContainerName||"");
+        const url: string = "/getpodlog/?podName=" + encodeURIComponent(podName) + "&podContainerName=" + encodeURIComponent(podContainerName || "");
         return fetch(url).then(res => res.text());
     }
 
