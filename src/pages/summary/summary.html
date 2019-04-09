@@ -9,7 +9,7 @@
     <title>Kubernetes summary UI Web App</title>
     <link rel="stylesheet" href="./summary.css" type="text/css">
     <style>
-        .logout {
+        .k8s-ui-logout {
             position: absolute;
             right: 50px;
             top: 25px;
@@ -19,9 +19,10 @@
 </head>
 
 <body>
-    <div id="main-content-parent" class="relative full-size">
-        <button class="logout" onclick="location.href='/logout'">Logout</button>
-        <div id="main-content" class="relative full-size"></div>
+    <div id="main-content-parent" class="full-size">
+        <div id="main-content" class="full-size">
+            <button class="k8s-ui-logout" onclick="location.href='/logout'">Logout</button>
+        </div>
     </div>
     <div id="root" style="display:none"></div>
     <script type="text/javascript" src="./Summary.js" charset="utf-8"></script>
