@@ -183,8 +183,8 @@ export class PageDataService extends KubeServiceBase {
         return Promise.resolve(sampleImageData);
     }
 
-    public getPodLog(podName: string): Promise<string> {
-        const url: string = "/getpodlog/?podName=" + encodeURIComponent(podName);
+    public getPodLog(podName: string, podContainerName?: string): Promise<string> {
+        const url: string = "/getpodlog/?podName=" + encodeURIComponent(podName) + "&podContainerName=" + encodeURIComponent(podContainerName || "");
         return fetch(url).then(res => res.text());
     }
 
