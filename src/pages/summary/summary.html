@@ -14,15 +14,15 @@
             right: 50px;
             top: 25px;
             float: right;
+            z-index: 3;
         }
     </style>
 </head>
 
 <body>
     <div id="main-content-parent" class="full-size">
-        <div id="main-content" class="full-size">
-            <button class="k8s-ui-logout" onclick="location.href='/logout'">Logout</button>
-        </div>
+        <button class="k8s-ui-logout" onclick="location.href='/logout'">Logout</button>
+        <div id="main-content" class="full-size"></div>
     </div>
     <div id="root" style="display:none"></div>
     <script type="text/javascript" src="./Summary.js" charset="utf-8"></script>
