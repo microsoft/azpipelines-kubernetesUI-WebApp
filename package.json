@@ -32,10 +32,10 @@
     "formidable": "~1.1.1"
   },
   "devDependencies": {
-    "@azurepipelines/webapp-kube-summary": "^3.151.0",
+    "@azurepipelines/webapp-kube-summary": "^3.151.1",
     "@types/react": "16.8.2",
     "@types/react-dom": "16.8.2",
-    "azure-devops-ui": "1.149.3",
+    "azure-devops-ui": "^1.151.1",
     "base64-inline-loader": "^1.1.1",
     "copy-webpack-plugin": "^4.6.0",
     "copyfiles": "^2.1.0",
@@ -44,7 +44,6 @@
     "mini-css-extract-plugin": "^0.5.0",
     "node-inspect": "^1.11.5",
     "node-sass": "^4.11.0",
-    "office-ui-fabric-react": "5.131.5",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "react": "16.8.2",
     "react-dom": "16.8.2",
