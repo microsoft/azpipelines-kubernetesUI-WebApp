@@ -27,7 +27,7 @@
     "start": "npm run compiledev && node dist/server.js"
   },
   "dependencies": {
-    "@kubernetes/client-node": "^0.8.1",
+    "@kubernetes/client-node": "^0.8.2",
     "express": "~4.16.4",
     "formidable": "~1.1.1"
   },
