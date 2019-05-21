@@ -51,9 +51,10 @@
     "sass": "^1.15.2",
     "sass-loader": "~7.1.0",
     "style-loader": "~0.23.1",
+    "tar": "^4.4.8",
     "ts-loader": "~5.2.2",
     "typescript": "^2.9.2",
-    "webpack": "^4.27.1",
+    "webpack": "^4.32.0",
     "webpack-cli": "^3.1.2"
   }
 }
