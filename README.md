@@ -45,6 +45,18 @@ _dist_ folder contains a node.js file [server.js], which acts as server later.
 
 4. Azure template to create a webapp in azure `Azure\windows-webapp-template.json`.
 
+## How to test changes made in 'azpipelines-kubernetesUI'
+
+1. Build `azpipelines-kubernetesUI` repo, afetr making changes in the repo.
+
+2. Run following command, after replacing _\<src-location-of-zpipelines-kubernetesUI\>_ and _\<version\>_ with right values.
+
+    `npm install <src-location-of-zpipelines-kubernetesUI>\_bin\webAppPackage\azurepipelines-webapp-kube-summary-<version>.tgz`
+    
+3. After following command is done, navigate to **localhost:8095** using browser to check changes made.
+
+    `npm run start`
+
 ## Dependencies
 
 This repository depends on the following package:
