@@ -53,7 +53,7 @@ _dist_ folder contains a node.js file [server.js], which acts as server later.
 
     `npm install <src-location-of-zpipelines-kubernetesUI>\_bin\webAppPackage\azurepipelines-webapp-kube-summary-<version>.tgz`
     
-3. After following command is done, navigate to **localhost:8095** using browser to check changes made.
+3. After running the following command, navigate to **localhost:8095** using browser to check the changes made.
 
     `npm run start`
 
