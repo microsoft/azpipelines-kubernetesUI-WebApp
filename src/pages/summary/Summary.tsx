@@ -5,6 +5,7 @@
 
 import * as K8sSummary from "@azurepipelines/webapp-kube-summary";
 import { ContentReader } from "@azurepipelines/webapp-kube-summary/dist/WebUI/Common/ContentReader";
+import { DefaultImageLocation } from "@azurepipelines/webapp-kube-summary/dist/WebUI/Common/DefaultImageLocation";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { PageDataService } from "./PageData";
@@ -25,7 +26,8 @@ class Summary extends React.Component<{}, { clusterName: string }> {
             kubeService: this._pageDataService,
             imageService: this._pageDataService,
             clusterName: this.state.clusterName,
-            getContentReaderComponent: (props?: any) => <ContentReader {...props} />
+            getContentReaderComponent: (props?: any) => <ContentReader {...props} />,
+            getImageLocation: DefaultImageLocation.getImageLocation
         } as K8sSummary.IKubeSummaryProps;
         return <K8sSummary.KubeSummary  {...props} />;
     }
