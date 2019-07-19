@@ -41,7 +41,7 @@ _dist_ folder contains a node.js file [server.js], which acts as server later.
     
 3. open browser, and **localhost:8095**, provide config file, and can see default namespace UI. Provide namespace as query parameter to get other namespace details.
 
-![image](https://user-images.githubusercontent.com/26214977/58565868-236dc580-824d-11e9-9119-b8f28b3d22bd.png)
+![Cluster workloads page UI](docs/WorkloadsPivot.png)
 
 4. Azure template to create a webapp in azure `Azure\windows-webapp-template.json`.
 
