@@ -25,7 +25,8 @@ jobs:
         npm run build
         npm prune --production
     # deploy the package
-    - uses: azure/appservice-actions/webapp-container@master
+    - name: deploy webapp
+      uses: azure/appservice-actions/webapp-container@master
       with:
         app-name: 'madhuvk8swebapp'
         package: '.'
