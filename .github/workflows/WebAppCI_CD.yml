@@ -24,11 +24,18 @@ jobs:
         npm install
         npm run build
         npm prune --production
+    # Azure login
+    - name: Azure login
+      uses: azure/actions/login@master
+      with:
+        creds: ${{ secrets.AZURE_WEBAPP_MADHUVK8SWEBAPP }}
     # deploy the package
     - name: deploy webapp
       uses: azure/appservice-actions/webapp-container@master
       with:
         app-name: 'madhuvk8swebapp'
         package: '.'
-        publish-profile-xml: '${{ secrets.AZURE_WEBAPP_MADHUVK8SWEBAPP }}'
-      id: madhuvk8swebapp
+    # Azure logout 
+    - name: Azure logout
+      run: |
+        az logout
