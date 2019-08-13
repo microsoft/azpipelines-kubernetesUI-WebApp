@@ -1,0 +1,33 @@
+name: PR to master CI
+
+on: 
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build_and_publish:
+    name: Build, package and deploy source to webapp
+    runs-on: ubuntu-latest
+    steps:
+    # checkout the repo
+    - name: Checkout the repo
+      uses: actions/checkout@master
+    # Make sure appropriate npm and node modules available
+    - name: Using Node.js 8.9.0
+      uses: actions/setup-node@v1
+      with:
+        version: 8.9.0
+    # install dependencies, build, and package
+    - name: install dependencies, build, and package
+      run: |
+        npm install
+        npm run build --if-present
+        npm prune --production   
+    # deploy web app using publish profile credentials
+    - if: github.event == 'push'
+      uses: azure/appservice-actions/webapp@master    
+      with: 
+        app-name: k8smadhuvwebapp
+        package: '.'
+        publish-profile-xml: '${{ secrets. }}'
