@@ -18,15 +18,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         version: 8.9.0
-    # install dependencies, build, and package
-    - name: install dependencies, build, and package
-      run: |
-        npm install
-        npm run build --if-present
-        npm prune --production   
-    # Sample to check events CI
-    - if: github.event == 'push'
-      run: echo This is a push event
-    # Sample to check events for PR
-    - if: github.event == 'pull_request'
-      run: echo This is a pull_request event
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Dump job context
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+      run: echo "$JOB_CONTEXT"
+    - name: Dump runner context
+      env:
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+      run: echo "$RUNNER_CONTEXT"
