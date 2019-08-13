@@ -1,0 +1,19 @@
+name: PR to master CI
+
+on: [push]
+
+jobs:
+  build:
+    name: Build source
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Use Node.js 8.9.0
+      uses: actions/setup-node@v1
+      with:
+        version: 8.9.0
+    - name: npm install, build and package
+      run: |
+        npm install
+        npm run build
+        npm prune --production
