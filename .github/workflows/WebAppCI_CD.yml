@@ -24,10 +24,9 @@ jobs:
         npm install
         npm run build --if-present
         npm prune --production   
-    # deploy web app using publish profile credentials
+    # Sample to check events CI
     - if: github.event == 'push'
-      uses: azure/appservice-actions/webapp@master    
-      with: 
-        app-name: k8smadhuvwebapp
-        package: '.'
-        publish-profile-xml: '${{ secrets. }}'
+      run: echo This is a push event
+    # Sample to check events for PR
+    - if: github.event == 'pull_request'
+      run: echo This is a pull_request event
