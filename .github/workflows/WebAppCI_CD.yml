@@ -24,8 +24,10 @@ jobs:
         npm install
         npm run build
         npm prune --production
-    - name: Dump GitHub context
-      if: github.event_name == 'push'
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
+    # deploy the package
+    - uses: azure/appservice-actions/webapp-container@master
+      with:
+        app-name: 'madhuvk8swebapp'
+        package: '.'
+        publish-profile-xml: '${{ secrets.AZURE_WEBAPP_MADHUVK8SWEBAPP }}'
+      id: madhuvk8swebapp
