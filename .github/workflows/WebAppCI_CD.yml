@@ -10,31 +10,21 @@ jobs:
     name: Build, package and deploy source to webapp
     runs-on: windows-latest
     steps:
+
     # checkout the repo
     - name: Checkout the repo
       uses: actions/checkout@master
-    # Make sure appropriate npm and node modules available
-    - name: Using Node.js 8.9.0
-      uses: actions/setup-node@v1
-      with:
-        version: 8.9.0
-    # install dependencies, build, and package
-    - name: install dependencies, build, and package
-      run: |
-        npm install
-        npm run build
-        npm prune --production
+
     # Azure login
     - name: Azure login
       uses: azure/actions/login@master
       with:
         creds: ${{ secrets.AZURE_WEBAPP_MADHUVK8SWEBAPP }}
-    # deploy the package
-    - name: deploy webapp
-      uses: azure/appservice-actions/webapp-container@master
-      with:
-        app-name: 'madhuvk8swebapp'
-        package: '.'
+    
+    - name: Azure list web-sites 
+      run: |
+        az webapp list --query "[?state=='Running']" --resource-group madhuvk8swebapp
+
     # Azure logout 
     - name: Azure logout
       run: |
