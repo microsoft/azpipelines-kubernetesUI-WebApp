@@ -188,6 +188,95 @@ export class PageDataService extends KubeServiceBase {
         return fetch(url).then(res => res.text());
     }
 
+    public getImageProvenances(imageNames: string[]): Promise<any> {
+        const imageName = imageNames[0];
+        const sampleImageProvenance = {
+            "resourceUri": imageName,
+            "build": {
+                "name": "80ba3a3c-a1d1-4c17-b04d-87c6a1db7dcc",
+                "resourceUri": imageName,
+                "noteName": "projects/d75f4228-7f7f-435c-9fd3-edab92c59e1d/notes/1",
+                "kind": 2,
+                "createTime": "2019-11-28T10:49:10.110Z",
+                "updateTime": "2019-11-28T10:49:10.110Z",
+                "build": {
+                    "provenance": {
+                        "id": "1",
+                        "projectId": "d75f4228-7f7f-435c-9fd3-edab92c59e1d",
+                        "createTime": "2019-11-28T10:49:10.110Z",
+                        "startTime": "2019-11-28T10:49:10.110Z",
+                        "creator": "sample@microsoft.com",
+                        "logsUri": "http://localhost/DefaultCollection/p1/_build/results?buildId=2",
+                        "sourceProvenance": {
+                            "context": {
+                                "git": {
+                                    "url": "http://localhost/DefaultCollection/p1/_git/p1",
+                                    "revisionId": "04c33e226720e53e427bc8fc56b654f645a591e8"
+                                },
+                                "contextCase": 3
+                            }
+                        },
+                        "buildOptions": {
+                            "dockerFilePath": "C:\\vsts-agent\\_work\\27\\s\\Dockerfile",
+                            "labels": "localhost.image.system.teamfoundationcollectionuri=http://localhost/DefaultCollection/, localhost.image.system.teamproject=p1",
+                            "tags": "2",
+                            "context": "C:\\vsts-agent\\_work\\27\\s"
+                        },
+                        "builderVersion": "2",
+                        "buildArtifacts": [
+                            {
+                                "checksum": "ae440470da5483fb43c68562ebf28b9cb6542735d14c343d920efe0354095ab5",
+                                "id": imageName,
+                                "names": ["registry.azurecr.io/hello-world:2"]
+                            }
+                        ]
+                    }
+                }
+            },
+            "image": {
+                "name": "fa56acb3-906e-4076-b7e6-90b6a1fb1ea9",
+                "resourceUri": imageName,
+                "noteName": "projects/d75f4228-7f7f-435c-9fd3-edab92c59e1d/notes/ubuntu",
+                "kind": 3,
+                "createTime": "2019-11-28T10:49:10.110Z",
+                "updateTime": "2019-11-28T10:49:10.110Z",
+                "image": {
+                    "fingerprint": {
+                        "v1Name": "96d8a98d5c14bfed8edff88cf705f15ff630a516ef781abef1ff92a2f73fbf02",
+                        "v2Blob": ["a1aa3da2a80a775df55e880b094a1a8de19b919435ad0c71c29a0983d64e65db", "ef1a1ec5bba9f5efcecf38693111c335cafa27f53669a91bee5d3dc17819180c", "6c3332381368f5c277995c2e1d19dc895b8a870ba7d1ccd8a4dbe4a5c26810bc"],
+                        "v2Name": "30b6dd71670db3a07d360875957b535f7aa5a5a0132025bf865a8e96346b6685"
+                    },
+                    "distance": 17,
+                    "layerInfo": [
+                        {
+                            "directive": "ADD",
+                            "arguments": "file:288ac0434f65264f3c50cf3e2766c5dbf3fa953c89995dd9445063fd565aac81 in / "
+                        },
+                        {
+                            "directive": "RUN",
+                            "arguments": "/bin/sh -c [ -z \"$(apt-get indextargets)\" ]"
+                        },
+                        {
+                            "directive": "RUN",
+                            "arguments": "/bin/sh -c set -xe   && echo '#!/bin/sh' > /usr/sbin/policy-rc.d  && echo 'exit 101' >> /usr/sbin/policy-rc.d  && chmod +x /usr/sbin/policy-rc.d   && dpkg-divert --local --rename --add /sbin/initctl  && cp -a /usr/sbin/policy-rc.d /sbin/initctl  && sed -i 's/^exit.*/exit 0/' /sbin/initctl   && echo 'force-unsafe-io' > /etc/dpkg/dpkg.cfg.d/docker-apt-speedup   && echo 'DPkg::Post-Invoke { \"rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true\"; };' > /etc/apt/apt.conf.d/docker-clean  && echo 'APT::Update::Post-Invoke { \"rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true\"; };' >> /etc/apt/apt.conf.d/docker-clean  && echo 'Dir::Cache::pkgcache \"\"; Dir::Cache::srcpkgcache \"\";' >> /etc/apt/apt.conf.d/docker-clean   && echo 'Acquire::Languages \"none\";' > /etc/apt/apt.conf.d/docker-no-languages   && echo 'Acquire::GzipIndexes \"true\"; Acquire::CompressionTypes::Order:: \"gz\";' > /etc/apt/apt.conf.d/docker-gzip-indexes   && echo 'Apt::AutoRemove::SuggestsImportant \"false\";' > /etc/apt/apt.conf.d/docker-autoremove-suggests"
+                        }, {
+                            "directive": "RUN", "arguments": "/bin/sh -c mkdir -p /run/systemd && echo 'docker' > /run/systemd/container"
+                        },
+                        {
+                            "directive": "CMD",
+                            "arguments": "[\"/bin/sh\" \"-c\" \"[“echo”,”Image created”]\"]"
+                        }
+                    ]
+                }
+            },
+            "deployment": [],
+            "attestation": [],
+            "vulnerability": []
+        };
+
+        return Promise.resolve([sampleImageProvenance]);
+    }
+
     private _populateEntities(command: string): Promise<any> {
         return fetch(command).then(res => res.ok ? res.json() : {});
     }
