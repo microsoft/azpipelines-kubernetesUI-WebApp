@@ -35,7 +35,7 @@
     "@azurepipelines/webapp-kube-summary": "^3.155.0",
     "@types/react": "16.8.2",
     "@types/react-dom": "16.8.2",
-    "azure-devops-ui": "^1.151.1",
+    "azure-devops-ui": "^1.155.0",
     "base64-inline-loader": "^1.1.1",
     "copy-webpack-plugin": "^4.6.0",
     "copyfiles": "^2.1.0",
