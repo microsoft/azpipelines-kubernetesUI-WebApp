@@ -1,0 +1,31 @@
+name: PR to master CI
+
+on: 
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build_and_publish:
+    name: Build, package and deploy source to webapp
+    runs-on: windows-latest
+    steps:
+
+    # checkout the repo
+    - name: Checkout the repo
+      uses: actions/checkout@master
+
+    # Azure login
+    - name: Azure login
+      uses: azure/actions/login@master
+      with:
+        creds: ${{ secrets.AZURE_WEBAPP_MADHUVK8SWEBAPP }}
+    
+    - name: Azure list web-sites 
+      run: |
+        az webapp list --query "[?state=='Running']" --resource-group madhuvk8swebapp
+
+    # Azure logout 
+    - name: Azure logout
+      run: |
+        az logout
