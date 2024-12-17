@@ -4,6 +4,7 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
+var path = require('path');
 var k8s = require('@kubernetes/client-node');
 var formidable = require('formidable');
 var express = require("express");
@@ -16,6 +17,14 @@ const summaryUrl = "/summary/summary.html";
 var k8sCoreApi;
 var k8sAppApiClient;
 var userInputNamespace = "";
+
+function normalizeAndValidatePath(baseDir, relativePath) {
+    const normalizedPath = path.normalize(path.join(baseDir, relativePath));
+    if (!normalizedPath.startsWith(baseDir)) {
+        throw new Error('Path is outside the allowed directory');
+    }
+    return normalizedPath;
+}
 
 const getNamespaces = (namespace, pretty) => {
     return k8sCoreApi && k8sCoreApi.listNamespace(pretty);
@@ -58,7 +67,7 @@ app.get('/login', function (req, res) {
     } = getUserInput(req);
     userInputNamespace = namespaceComputed;
     if (isUserLogRequired()) {
-        res.sendFile(__dirname + loginPageUrl);
+        res.sendFile(path.join(__dirname,loginPageUrl));
     } else {
         var summaryUrl = '/summary?namespace=' + userInputNamespace;
         res.redirect(summaryUrl);
@@ -111,7 +120,7 @@ app.get('/summary', function (req, res) {
     } = getUserInput(req);
     userInputNamespace = namespaceComputed;
     var fileName = isUserLogRequired() ? loginPageUrl : summaryUrl;
-    res.sendFile(__dirname + fileName);
+    res.sendFile(path.join(__dirname,fileName));
 });
 
 app.get('/getpods', function (req, res) {
@@ -167,10 +176,16 @@ app.use(function (req, res, next) {
     if (requestUrl) {
         userInputNamespace = namespaceComputed;
         var fileName = "/summary" + requestUrl;
-        if (fs.existsSync(__dirname + fileName)) {
-            res.sendFile(__dirname + fileName);
-        } else {
-            res.sendFile(__dirname + requestUrl);
+
+        try {
+            var normalizedFilePath = normalizeAndValidatePath(__dirname,requestUrl);
+            if (fs.existsSync(normalizeAndValidatePath(__dirname,fileName))) {
+                normalizedFilePath = normalizeAndValidatePath(__dirname,fileName);
+            }
+            res.sendFile(normalizedFilePath);
+        } catch (error) {
+            console.error("Path normalization failed:", error.message);  // Log the error for debugging
+            res.status(403).send('Access denied');
         }
     }
 });
@@ -214,7 +229,7 @@ function processCommands(req, res, command, contentType = "application/json") {
             return true;
         } else {
             userInputNamespace = defaultNamespace;
-            res.sendFile(__dirname + loginPageUrl);
+            res.sendFile(path.join(__dirname,loginPageUrl));
         }
     }
 
